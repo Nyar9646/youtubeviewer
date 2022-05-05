@@ -1,4 +1,4 @@
-/** react's entry point */
+/** entry point */
 
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'

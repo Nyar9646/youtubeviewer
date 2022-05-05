@@ -9,10 +9,10 @@ const router = express.Router()
 
 /** port:3000 で待ち受け */
 const server = app.listen(3000, function () {
-  console.log(`Node.js is litening to PORT : ${server.address().port}`)
+  console.log(`Node.js is listening to PORT : ${server.address().port}`)
 })
 
-router.use(express.static('puclic'))
+router.use(express.static('public'))
 
 router.get('*', (req, res, next) => {
   res.sendFile(path.join(__dirname, './public/index.html'))
