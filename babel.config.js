@@ -1,6 +1,7 @@
 /** json形式で記述も可能。babel.donfig.json */
 
 module.exports = api => {
+  /** produxtion = 本番 */
   const isProduction = api.env('production')
   api.cache(true)
 
@@ -36,7 +37,24 @@ module.exports = api => {
     ],
   ]
 
-  const plugins = []
+  /** babel と関連づけたい他の lib を記載 */
+  const plugins = [
+    [
+      'babel-plugin-styled-components',
+      isProduction
+        ? {
+          // クラス名にファイル名を含めるか
+          fileName: false,
+          // クラス名に React の component 名を含めるか
+          displayName: false,
+          // 到達不能コードがある場合、除去するか
+          pure: true,
+        }
+        : {
+          minify: false,
+        },
+    ]
+  ]
 
   return {
     presets,
