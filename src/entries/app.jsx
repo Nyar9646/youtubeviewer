@@ -6,12 +6,15 @@ import 'regenerator-runtime/runtime'  // 非同期関数の機能
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-
 import App from '~/routings/App'
+import GlobalStyle from '../style/GlobalStyle'
 
 const rootEl = document.getElementById('root')
 
 ReactDOM.render(
-  <App />,
+  <>
+    <GlobalStyle />
+    <App />
+  </>,
   rootEl
 )

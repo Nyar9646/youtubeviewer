@@ -12,6 +12,7 @@ import { MemoryRouter } from "react-router";
  */
 
 import { addDecorator } from "@storybook/react";
+import GlobalStyle from '../src/style/GlobalStyle'
 
 /** story を描画する関数を受け取り、新しい story を描画 */
 addDecorator(storyFn => (
@@ -21,3 +22,6 @@ addDecorator(storyFn => (
     {storyFn()}
   </MemoryRouter>
 ))
+
+/** style-components の利用 */
+addDecorator(storyFn => <><GlobalStyle />{storyFn()}</>)
