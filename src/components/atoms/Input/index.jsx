@@ -90,7 +90,6 @@ InputContainer.defaultProps = {
   onChange: null,
   defaultValue: '',
   placeholder: '',
-  presenter: '',
 }
 
 /** コンテナーコンポーネントがプレゼンテーションコンポーネントを受け取って実装 */
