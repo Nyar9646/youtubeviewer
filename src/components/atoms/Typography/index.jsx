@@ -90,7 +90,7 @@ Typography.PropTypes = {
 }
 
 /** 未設定の property の初期値 */
-Typography.defaultProps = {
+TypeError.defaultProps = {
   className: '',
   size: 'm',
   color: 'inherit',
