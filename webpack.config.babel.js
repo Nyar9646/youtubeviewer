@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import path from 'path'
+import Dotenv from 'dotenv-webpack'
 
 export default (env, args) => {
   const isProduction = args.mode === 'production'
@@ -19,12 +20,6 @@ export default (env, args) => {
   ]
 
   return {
-    // entry: './src/entries/sample.jsx',
-    // output: {
-    //   path: path.join(__dirname, './output/'),
-    //   filename: 'sample.js',
-    // },
-    // module: { rules }
     devtool,
     entry: './src/entries/app.jsx',
     output: {
@@ -39,5 +34,12 @@ export default (env, args) => {
       },
       extensions: ['.js', '.jsx'],
     },
+    plugins: [
+      new Dotenv(),
+    ],
+    // /** size の worning 出力を無効化 */
+    performance: {
+      hints: false
+    }
   }
 }

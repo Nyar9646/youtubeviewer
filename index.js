@@ -12,6 +12,8 @@ const server = app.listen(3000, function () {
   console.log(`Node.js is listening to PORT : ${server.address().port}`)
 })
 
+app.use('/api', require('./api'))
+
 router.use(express.static('public'))
 
 router.get('*', (req, res, next) => {
