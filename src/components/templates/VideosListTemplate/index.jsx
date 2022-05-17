@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import useOnScrollEnd from "~/utils/useOnScrollEnd";
 
 const Root = styled.div`
   width: 100%;
@@ -29,36 +30,32 @@ const VideosListTemplate = ({
   videosListContents,
   onScrollEnd,
 }) => {
-  /**
-   * スクロール処理
-   *  scroll ハンドラを DOM に設定したいので副作用がある => useEffect 使用
-   *  無限スクロール : 1番下までスクロールされたら動画一覧の続きを読み込めるようにする
-   */
-  useEffect(() => {
-    if (!onScrollEnd) {
-      return
-    }
+  // useEffect(() => {
+  //   if (!onScrollEnd) {
+  //     return
+  //   }
 
-    const scrollHandler = ({ target: { scrollingElement } }) => {
-      const { scrollTop, scrollHeight, clientHeight } = scrollingElement
+  //   const scrollHandler = ({ target: { scrollingElement } }) => {
+  //     const { scrollTop, scrollHeight, clientHeight } = scrollingElement
 
-      /** 1番下までスクロールされていない場合 */
-      if (scrollTop < scrollHeight - clientHeight) {
-        return
-      }
+  //     /** 1番下までスクロールされていない場合 */
+  //     if (scrollTop < scrollHeight - clientHeight) {
+  //       return
+  //     }
 
-      /** 親コンポーネントで、続きをロードする */
-      onScrollEnd()
-    }
+  //     /** 親コンポーネントで、続きをロードする */
+  //     onScrollEnd()
+  //   }
 
-    /** イベントハンドラの設定 */
-    window.document.addEventListener('scroll', scrollHandler)
+  //   /** イベントハンドラの設定 */
+  //   window.document.addEventListener('scroll', scrollHandler)
 
-    /** component の un mount 時 / onScrollEnd が変更された際、ハンドラを削除 */
-    return () => {
-      window.document.removeEventListener('scroll', scrollHandler)
-    }
-  }, [onScrollEnd])
+  //   /** component の un mount 時 / onScrollEnd が変更された際、ハンドラを削除 */
+  //   return () => {
+  //     window.document.removeEventListener('scroll', scrollHandler)
+  //   }
+  // }, [onScrollEnd])
+  useOnScrollEnd(onScrollEnd)
 
   return (
     <Root>
