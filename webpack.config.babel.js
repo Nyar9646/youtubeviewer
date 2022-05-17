@@ -1,5 +1,5 @@
-import webpack from 'webpack'
 import path from 'path'
+import { IgnorePlugin } from 'webpack'
 import Dotenv from 'dotenv-webpack'
 
 export default (env, args) => {
@@ -35,11 +35,12 @@ export default (env, args) => {
       extensions: ['.js', '.jsx'],
     },
     plugins: [
-      new Dotenv(),
+      // new Dotenv(),
+      /**
+       * 正規表現にマッチするモジュールを作成しない
+       *  moment の中の locale 以下を作成しない
+       */
+      new IgnorePlugin(/^\.\/locale$/,/moment$/),
     ],
-    // /** size の worning 出力を無効化 */
-    performance: {
-      hints: false
-    }
   }
 }
