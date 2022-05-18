@@ -79,7 +79,7 @@ const Typography = ({
  * PropTypes : パッケージ prop-types を使った機能
  * 未定義の property が渡されると警告が出る
  */
-Typography.PropTypes = {
+Typography.propTypes = {
   className: PropTypes.string,
   size: PropTypes.oneOf(sizes),         // oneOf = 配列の要素の内、いずれか1つ
   color: PropTypes.oneOf(colors),
@@ -92,9 +92,9 @@ Typography.PropTypes = {
 /** 未設定の property の初期値 */
 Typography.defaultProps = {
   className: '',
-  size: 'm',
+  size: 's',
   color: 'inherit',
-  align: 'left',
+  align: 'lest',
   bold: false,
   display: 'block',
 }

@@ -10,7 +10,7 @@ const commonStyle = css`
   text-align: center;
 `
 
-const Header = styled.dev`
+const Header = styled.div`
   width: 100%;
   height: 33px;
   ${commonStyle};

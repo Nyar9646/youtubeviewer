@@ -122,7 +122,7 @@ VideosListItemContainer.propTypes = {
     snippet: PropTypes.shape({
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
-      Thumbnails: PropTypes.shape({
+      thumbnails: PropTypes.shape({
         medium : PropTypes.shape({
           url: PropTypes.string,
         }),
