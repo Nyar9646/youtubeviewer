@@ -1,7 +1,8 @@
 const express = require('express')
 const { google } = require('googleapis')
+const {readFavoriteIds, writeFavoriteIds} = require('../src/utils/favorite')
 
-const YOUTUBE_API_KEY = ''
+const YOUTUBE_API_KEY = 'AIzaSyAAU8g_50vyz4P4JCw-AKFukwGkWxmcrNI'
 console.log(process.env.YOUTUBE_API_KEY)  // x undefind
 
 const youtube = google.youtube({
@@ -33,6 +34,28 @@ router.get('/videos/search/:keyword', (req, res, next) => {
     })
 
     res.json({ items, nextPageToken })
+  })().catch(next)
+})
+
+/**
+ * お気に入り動画の取得
+ *  router.get('/videos/:videoId') より前に書くこと。videoId を favorites と誤認するため
+ */
+router.get('/videos/favorites', (req, res, next) => {
+  (async () => {
+    const favoriteIds = await readFavoriteIds()
+
+    if (!favoriteIds.length) {
+      res.json({items: []})
+      return
+    }
+
+    const {data: {items}} = await youtube.videos.list({
+      part: 'statistics,snippet',
+      id: favoriteIds.join(','),
+    })
+
+    res.json({items})
   })().catch(next)
 })
 
@@ -77,5 +100,45 @@ router.get('/videos/:videoId/related', (req, res, next) => {
     res.json({items, nextPageToken})
   })().catch(next)
 })
+
+/** お気に入り動画ID一覧の取得 */
+router.get('/favorites', (req, res, next) => {
+  readFavoriteIds().then(data => {
+    res.json(data)
+  }).catch(next)
+})
+
+/** お気に入り登録・解除 */
+router.route('/favorites/:id')
+  // お気に入り登録
+  .post((req, res, next) => {
+    (async () => {
+      const {id} = req.params
+      const favoriteIds = await readFavoriteIds()
+
+      if (favoriteIds.indexOf(id) === -1) {
+        // お気に入りリストに追加
+        favoriteIds.unshift(id)
+        // お気に入りリストを書き込む
+        writeFavoriteIds(favoriteIds)
+      }
+
+      res.end()
+    })().catch(next)
+  })
+  // お気に入り削除
+  .delete((req, res, next) => {
+    (async () => {
+      const {id} = req.params
+      const favoriteIds = await readFavoriteIds()
+      const indexOfId = favoriteIds.indexOf(id)
+
+      if (indexOfId !== -1) {
+        writeFavoriteIds(favoriteIds.filter(favoriteId => (favoriteId !== id)))
+      }
+
+      res.end()
+    })().catch(next)
+  })
 
 module.exports = router
