@@ -1,7 +1,7 @@
 const express = require('express')
 const { google } = require('googleapis')
 
-const YOUTUBE_API_KEY = 'AIzaSyAAU8g_50vyz4P4JCw-AKFukwGkWxmcrNI'
+const YOUTUBE_API_KEY = ''
 console.log(process.env.YOUTUBE_API_KEY)  // x undefind
 
 const youtube = google.youtube({
