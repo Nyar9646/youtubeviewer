@@ -9,7 +9,7 @@ const AppRouting = () => (
   <BrowserRouter>
     <Switch>
       <Route path='/' exact title='Top' component={TopPage} />
-      <Route path='/play/:videoId' title='動画再生'component={PlayerPage} />
+      <Route path='/play/:videoId' title='動画再生' component={PlayerPage} />
       <Route path='*' component={NotFoundPage} />
     </Switch>
   </BrowserRouter>

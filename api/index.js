@@ -1,7 +1,8 @@
 const express = require('express')
 const { google } = require('googleapis')
-// const { YOUTUBE_API_KEY } = process.env
-const YOUTUBE_API_KEY = ''
+
+const YOUTUBE_API_KEY = 'AIzaSyAAU8g_50vyz4P4JCw-AKFukwGkWxmcrNI'
+console.log(process.env.YOUTUBE_API_KEY)  // x undefind
 
 const youtube = google.youtube({
   version: 'v3',
@@ -10,12 +11,12 @@ const youtube = google.youtube({
 
 const router = express.Router()
 
+/** 動画の検索結果の取得 */
 router.get('/videos/search/:keyword', (req, res, next) => {
   const { keyword } = req.params;
   const { pageToken } = req.query;
 
   (async () => {
-    /** 検索結果を動画IDで取得 */
     const { data: { items: idItems, nextPageToken }} = await youtube.search.list({
       part: 'id',
       q: keyword,
@@ -32,6 +33,48 @@ router.get('/videos/search/:keyword', (req, res, next) => {
     })
 
     res.json({ items, nextPageToken })
+  })().catch(next)
+})
+
+/** 動画詳細情報の取得 */
+router.get('/videos/:videoId', (req, res, next) => {
+  const {videoId} = req.params
+
+  (async () => {
+    // 動画の情報を取得
+    const {data: {items}} = await youtube.videos.list({
+      part: 'statistics,snippet',
+      id: videoId,
+    })
+
+    res.json(items[0])
+  })().catch(next)
+})
+
+/** 関連動画の取得 */
+router.get('/videos/:videoId/related', (req, res, next) => {
+  const {videoId: relatedToVideoId} = req.params
+  const {pageToken} =req.query
+
+  (async () => {
+    // 関連動画のIDを取得
+    const {data: {items: idItems, nextPageToken}} = await youtube.search.list({
+      part: 'id',
+      relatedToVideoId,
+      type: 'video',
+      maxResults: 20,
+      pageToken,
+    })
+
+    // 動画の情報を取得
+    const ids = idItems.map(({id: {videoId}}) => videoId)
+
+    const {data: {items}} = await youtube.videos.list({
+      part: 'statistics,snippet',
+      id: ids.join(',')
+    })
+
+    res.json({items, nextPageToken})
   })().catch(next)
 })
 

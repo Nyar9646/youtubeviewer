@@ -78,15 +78,16 @@ const Typography = ({
 /**
  * PropTypes : パッケージ prop-types を使った機能
  * 未定義の property が渡されると警告が出る
+ *   node = render できるもの
  */
 Typography.propTypes = {
   className: PropTypes.string,
-  size: PropTypes.oneOf(sizes),         // oneOf = 配列の要素の内、いずれか1つ
+  size: PropTypes.oneOf(sizes),
   color: PropTypes.oneOf(colors),
   display: PropTypes.oneOf(displays),
   align: PropTypes.oneOf(aligns),
   bold: PropTypes.bool,
-  children: PropTypes.node.isRequired,  // node = render できるもの
+  children: PropTypes.node.isRequired,
 }
 
 /** 未設定の property の初期値 */

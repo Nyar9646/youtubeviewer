@@ -59,8 +59,8 @@ VideoInfoPresenter.propTypes = {
   viewCount: PropTypes.string.isRequired,
 }
 
+/** item = YouTubeAPIから取得する動画情報 */
 const VideoInfoContainer = ({
-  /** item = YouTubeAPIから取得する動画情報 */
   item: {
     snippet: {
       publishedAt,
