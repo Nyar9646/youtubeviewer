@@ -5,3 +5,7 @@ import video from './sampleData.json'
 export default { title: 'organisms/VideoListItem' }
 
 export const videoListItem = () => <VideoListItem video={video} />
+
+export const vidoListItemWithFavoriteButton = () => (
+  <VideoListItem video={video} withFavoriteButton />
+)

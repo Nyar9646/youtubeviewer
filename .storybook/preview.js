@@ -33,7 +33,7 @@ const mockApi = {
   get: async () => {
     action('api.get')()
     return {data: []}
-  }
+  },
 }
 
 /** .storybook でも context(FavoriteContext) を利用可能にする */

@@ -2,7 +2,7 @@ const express = require('express')
 const { google } = require('googleapis')
 const {readFavoriteIds, writeFavoriteIds} = require('../src/utils/favorite')
 
-const YOUTUBE_API_KEY = ''
+const YOUTUBE_API_KEY = 'AIzaSyAAU8g_50vyz4P4JCw-AKFukwGkWxmcrNI'
 console.log(process.env.YOUTUBE_API_KEY)  // x undefind
 
 const youtube = google.youtube({
