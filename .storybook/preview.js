@@ -12,6 +12,8 @@ import { MemoryRouter } from "react-router";
  */
 
 import { addDecorator } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
+import {FavoriteProvider} from '../src/contexts/FavoriteContext'
 import GlobalStyle from '../src/style/GlobalStyle'
 
 /** story を描画する関数を受け取り、新しい story を描画 */
@@ -21,6 +23,24 @@ addDecorator(storyFn => (
   >
     {storyFn()}
   </MemoryRouter>
+))
+
+/**
+ * モックで API を実装
+ *  storybook の Action タブに、'api.get' と表示。空の配列を返す
+ */
+const mockApi = {
+  get: async () => {
+    action('api.get')()
+    return {data: []}
+  }
+}
+
+/** .storybook でも context(FavoriteContext) を利用可能にする */
+addDecorator(storyFn => (
+  <FavoriteProvider api={mockApi}>
+    {storyFn()}
+  </FavoriteProvider>
 ))
 
 /** style-components の利用 */
