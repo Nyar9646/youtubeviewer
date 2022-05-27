@@ -49,6 +49,8 @@ const FavoriteButtonContainer = ({
   const isFavorite = favoriteIds.indexOf(videoId) !== -1
 
   const onClickHandler = e => {
+    console.log(`FavoriteButton favoriteIds: ${favoriteIds}`)
+    console.log(`FavoriteButton ${videoId} : ${isFavorite}`)
     e.stopPropagation()
     api[isFavorite ? 'delete' : 'post'](videoId)
     dispatch({type: isFavorite ? 'remove' : 'add', id: videoId})
